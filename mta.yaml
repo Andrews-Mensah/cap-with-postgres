@@ -1,0 +1,63 @@
+_schema-version: '3.1'
+ID: cap-postgres
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx cds build --production
+        - bash ./pg-build.sh
+modules:
+  - name: cap-postgres-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: cap-postgres-auth
+      - name: cap-postgres-postgres
+
+  - name: cap-postgres-postgres-deployer
+    type: nodejs
+    path: gen/pg
+    parameters:
+      buildpack: nodejs_buildpack
+      no-route: true
+      no-start: true
+      disk-quota: 1GB
+      memory: 256MB
+      tasks:
+        - name: deploy-to-postgresql
+          command: npm start
+          disk-quota: 1GB
+          memory: 256MB
+    build-parameters: 
+      ignore:
+        - "node_modules/"
+    requires:
+      - name: cap-postgres-postgres
+
+resources:
+  - name: cap-postgres-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: cap-postgres-${org}-${space}
+        tenant-mode: dedicated
+  - name: cap-postgres-postgres
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: postgresql-db
+      service-plan: trial #it was development
