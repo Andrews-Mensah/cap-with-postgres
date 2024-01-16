@@ -1,0 +1,31 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.StudentViewer",
+      "description": "StudentViewer"
+    },
+    {
+      "name": "$XSAPPNAME.StudentAdmin",
+      "description": "StudentAdmin"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "StudentViewer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.StudentViewer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "StudentAdmin",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.StudentAdmin"
+      ],
+      "attribute-references": []
+    }
+  ]
+}

@@ -8,10 +8,13 @@
   "dependencies": {
     "@cap-js/postgres": "^1.4.1",
     "@sap/cds": "^7",
-    "express": "^4"
+    "@sap/xssec": "^3",
+    "express": "^4",
+    "passport": "^0"
   },
   "devDependencies": {
-    "@cap-js/sqlite": "^1"
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7"
   },
   "scripts": {
     "start": "cds-serve"
@@ -47,17 +50,17 @@
           }
         }
       },
-	  "db": {
-		"kind": "postgres",
-		"impl": "@cap-js/postgres",
-		"credentials": {
-			"host": "localhost",
-			"port": 5432,
-			"database": "Student",
-			"user": "postgres",
-			"password": "postgres"
-		}
-	},
+      "db": {
+        "kind": "postgres",
+        "impl": "@cap-js/postgres",
+        "credentials": {
+          "host": "localhost",
+          "port": 5432,
+          "database": "Student",
+          "user": "postgres",
+          "password": "postgres"
+        }
+      },
       "auth": "xsuaa"
     },
     "cov2ap": {
