@@ -1,0 +1,70 @@
+{
+  "name": "cap-postgres",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@cap-js/postgres": "^1.4.1",
+    "@sap/cds": "^7",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "cds": {
+    "requires": {
+      "[development]": {
+        "auth": {
+          "kind": "basic-auth",
+          "users": {
+            "StudentAdmin": {
+              "password": "123456",
+              "roles": [
+                "StudentAdmin"
+              ],
+              "id": "studentAdmin@student.com",
+              "firstName": "Student",
+              "lastName": "Admin",
+              "fullName": "Student Admin",
+              "email": "studentAdmin@student.com"
+            },
+            "Student": {
+              "password": "123456",
+              "roles": [
+                "StudentViewer"
+              ],
+              "id": "student@student.com",
+              "firstName": "Student",
+              "lastName": "1",
+              "fullName": "Student 1",
+              "email": "student@student.com"
+            }
+          }
+        }
+      },
+	  "db": {
+		"kind": "postgres",
+		"impl": "@cap-js/postgres",
+		"credentials": {
+			"host": "localhost",
+			"port": 5432,
+			"database": "Student",
+			"user": "postgres",
+			"password": "postgres"
+		}
+	},
+      "auth": "xsuaa"
+    },
+    "cov2ap": {
+      "plugin": true
+    },
+    "features": {
+      "kibana_formatter": true
+    }
+  }
+}
